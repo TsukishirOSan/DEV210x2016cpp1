@@ -1,0 +1,54 @@
+Choosing Data Types
+
+The data type chosen for your variables in a program should represent the type of information that will be used. When choosing a data type, such as int or string, careful consideration is required to ensure your application will handle the data entered by a user with the following aspects in mind:
+
+Range - specifically for numeric values
+Format- numeric or character data for zip/postal codes as an example
+Internationalization - consideration for character set support
+
+Using these considerations, select what you feel are the appropriate data types for the following:
+
+First Name
+Street Address
+Birth Date
+Zip/Postal Code
+Bank Account Balance
+Months of the Year
+
+Enter your selected data types for these along with rationale for why you chose them.
+
+Evaluate at least 2 of your peers providing feedback on their choices.
+
+This is an opportunity to explore and learn more about data types and isn't a right vs wrong peer assessment. Participation means you get points for this assessment.
+
+Your Response
+wstring firstname
+wstring streetAdd
+
+I am using wstring for both the first name and the street address without making them constants because wstring uses the UTF-16 norm which, under Windows handles pretty much all characters(for instance, the ï in my first name, or a kanji or arabic alphabet), which can both be in the first name and the address. No constants here since I don't know what it is used for, and if for any reason the user makes a typo in his or her first name, it's not going to be possible to change that; not to mention that the address may likely change if the person moves out.
+const enum Month{January = 1, February, March, April, May, June, July, August, September, October, November, December};
+const enum Day{ 1=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+
+struct bdate{
+Day day;
+Month month; // I chose the English names for each month as it is usually a standard. //Here it seemed more appropriate. Enums specifics allow to get the index value so I can still //get 1 for January here
+unsigned short year;
+};
+
+I cannot use a union for the birthdate simply because I may need to display the day, month and year of birth of the user. A structure type of data seemed the most appropriate considering the fact that I may simply want to access the year of birth say, for statitics purposes. Why enums? Because I want to make sure the user doesn't enter an invalid day (32 for instance) nor an invalid month. Unsigned short for the year to avoid a negative year but apart from that I cannot really make sure that the user (same for the day and month) actually enters the right date, I can only make sure he enters a year greater than 0, and an unsigned short as for now can handle a big range of years.
+
+I also decided to index the first element of my enumerations to 1 to simplify the display. If any computation is needed, I should be able to adapt, in the code or seeing that it may not have been such a good choice after all and changing that to putting it back to 0 index.
+I also made those enumerations constants as there is no specific reason for me to change it.
+
+wstring zip_postal;
+
+Depending on the country, a zip code or postal code is not only made of integers, it can also be made of characters and integers for example, again, to be able to use those variable regardless which alphabet is being used, wstring for Windows is the most appropriate string (UTF-16 aka 16 bits instead of the usual UTF-8 aka 8 bits). Indeed wstring takes at best twice the size of a string, but there is always some sort of counter part : saving memory and being more accurate don't always go hand in hand. I had to sacrifice a bit of one of those, I chose accuracy.
+
+double acc_balance;
+
+With its decimal precision, the type double is the most appropriate data type to handle money matters.
+
+Month month;
+const enum Month{January = 1, February, March, April, May, June, July, August, September, October, November, December};
+
+I already created the enum for the months of the year, I am simply going to reuse it as I declared the enumeration outside of my date structure. (2 birds with one stone here).
